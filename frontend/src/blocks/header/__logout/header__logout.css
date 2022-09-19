@@ -1,0 +1,11 @@
+.header__logout{
+    margin: 0;
+    /* font-weight: normal; */
+    font-size: 18px;
+    line-height: 1.22;
+    text-align: right;
+    color: #A9A9A9;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
