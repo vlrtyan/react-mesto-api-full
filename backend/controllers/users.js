@@ -11,7 +11,7 @@ const MONGO_DUPLICATE_ERROR_CODE = 11000;
 
 module.exports.getUsers = (req, res, next) => {
   Users.find({})
-    .then((users) => res.status(200).send({ data: users }))
+    .then((users) => res.status(200).send({ users }))
     .catch((err) => next(err));
 };
 

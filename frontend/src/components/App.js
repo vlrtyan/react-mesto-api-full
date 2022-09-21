@@ -156,7 +156,8 @@ function App() {
   React.useEffect(() => {
     api.setAuthHeaders();
     api.getUserData()
-      .then(userData => setCurrentUser(userData))
+      .then(userData => {
+        setCurrentUser(Object.values(userData)[0])})
       .catch(err => console.log(err))
   }, [])
 
@@ -164,8 +165,7 @@ function App() {
     api.setAuthHeaders();
     api.getInitialCards()
       .then((res) => {
-        console.log(res)
-        setCards(res);
+        setCards(Object.values(res)[0]);
       })
       .catch((err) => console.log(err))
   }, [])
