@@ -1,8 +1,18 @@
 export class Api {
-    constructor({ url, token }) {
+    constructor({ url }) {
         this.url = url;
-        this.token = token;
         this.__getResponseData = this._getResponseData.bind(this);
+    }
+
+    getToken() {
+        return `Bearer ${localStorage.getItem('token')}`
+    }
+
+    setAuthHeaders() {
+        this._headers = {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        }
     }
 
     _getResponseData(res) {
@@ -16,7 +26,7 @@ export class Api {
     getUserData() {
         return fetch(`${this.url}/users/me`, {
             headers: {
-                authorization: this.token
+                'Authorization': this.getToken()
             }
         })
             .then(this.__getResponseData);
@@ -25,7 +35,7 @@ export class Api {
     getInitialCards() {
         return fetch(`${this.url}/cards/`, {
             headers: {
-                authorization: this.token
+                'Authorization': this.getToken()
             }
         })
             .then(this.__getResponseData);
@@ -35,7 +45,7 @@ export class Api {
         return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
             headers: {
-                authorization: this.token,
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -50,7 +60,7 @@ export class Api {
         return fetch(`${this.url}/cards`, {
             method: 'POST',
             headers: {
-                authorization: this.token,
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -65,7 +75,7 @@ export class Api {
         return fetch(`${this.url}/cards/${data._id}`, {
             method: 'DELETE',
             headers: {
-                authorization: this.token,
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
         })
@@ -76,7 +86,7 @@ export class Api {
         return fetch(`${this.url}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
-                authorization: this.token,
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -91,7 +101,7 @@ export class Api {
             return fetch(`${this.url}/cards/${data._id}/likes`, {
                 method: 'DELETE',
                 headers: {
-                    authorization: this.token,
+                    'Authorization': this.getToken(),
                     'Content-Type': 'application/json'
                 }
             })
@@ -100,7 +110,7 @@ export class Api {
             return fetch(`${this.url}/cards/${data._id}/likes`, {
                 method: 'PUT',
                 headers: {
-                    authorization: this.token,
+                    'Authorization': this.getToken(),
                     'Content-Type': 'application/json'
                 }
             })
@@ -111,6 +121,5 @@ export class Api {
 }
 
 export const api = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-32',
-    token: 'f7e9f27f-efd9-4384-a381-5bfd59f30ca5'
+    url: 'https://api.mesto.vlrtyan.nomoredomains.sbs'
 })

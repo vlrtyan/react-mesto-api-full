@@ -34,10 +34,10 @@ function App() {
   //регистрация и авторизация
 
   React.useEffect(() => {
-    if (localStorage.getItem('jwt')) {
-      const jwt = localStorage.getItem('jwt');
-      console.log(jwt)
-      auth.checkToken(jwt)
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
+      console.log(token)
+      auth.checkToken(token)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
@@ -55,7 +55,7 @@ function App() {
   const handleLogin = (formData) => {
     auth.authorize(formData.email, formData.password)
       .then((data) => {
-        localStorage.setItem('jwt', data.token);
+        localStorage.setItem('token', data.token);
         setLoggedIn(true);
         navigate('/');
         setUserEmail(formData.email);
@@ -85,7 +85,7 @@ function App() {
 
   const onLogout = () => {
     setLoggedIn(false);
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('token');
     navigate('/sign-in');
   }
 
@@ -154,14 +154,17 @@ function App() {
   }
 
   React.useEffect(() => {
+    api.setAuthHeaders();
     api.getUserData()
       .then(userData => setCurrentUser(userData))
       .catch(err => console.log(err))
   }, [])
 
   React.useEffect(() => {
+    api.setAuthHeaders();
     api.getInitialCards()
       .then((res) => {
+        console.log((res))
         setCards(res);
       })
       .catch((err) => console.log(err))
