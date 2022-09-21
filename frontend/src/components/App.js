@@ -164,8 +164,8 @@ function App() {
     api.setAuthHeaders();
     api.getInitialCards()
       .then((res) => {
-        console.log(Object.values(res))
-        setCards(Object.values(res));
+        console.log(res)
+        setCards(res);
       })
       .catch((err) => console.log(err))
   }, [])
