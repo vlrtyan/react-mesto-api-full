@@ -4,7 +4,7 @@ export class Api {
         this.__getResponseData = this._getResponseData.bind(this);
     }
 
-    _getToken() {
+    getToken() {
         return `Bearer ${localStorage.getItem('token')}`
     }
 
@@ -26,7 +26,7 @@ export class Api {
     getUserData() {
         return fetch(`${this.url}/users/me`, {
             headers: {
-                'Authorization': this._getToken()
+                'Authorization': this.getToken()
             }
         })
             .then(this.__getResponseData);
@@ -35,7 +35,7 @@ export class Api {
     getInitialCards() {
         return fetch(`${this.url}/cards/`, {
             headers: {
-                'Authorization': this._getToken()
+                'Authorization': this.getToken()
             }
         })
             .then(this.__getResponseData);
@@ -45,7 +45,7 @@ export class Api {
         return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
             headers: {
-                'Authorization': this._getToken(),
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -60,7 +60,7 @@ export class Api {
         return fetch(`${this.url}/cards`, {
             method: 'POST',
             headers: {
-                'Authorization': this._getToken(),
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -75,7 +75,7 @@ export class Api {
         return fetch(`${this.url}/cards/${data._id}`, {
             method: 'DELETE',
             headers: {
-                'Authorization': this._getToken(),
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
         })
@@ -86,7 +86,7 @@ export class Api {
         return fetch(`${this.url}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
-                'Authorization': this._getToken(),
+                'Authorization': this.getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -101,7 +101,7 @@ export class Api {
             return fetch(`${this.url}/cards/${data._id}/likes`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': this._getToken(),
+                    'Authorization': this.getToken(),
                     'Content-Type': 'application/json'
                 }
             })
@@ -110,7 +110,7 @@ export class Api {
             return fetch(`${this.url}/cards/${data._id}/likes`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': this._getToken(),
+                    'Authorization': this.getToken(),
                     'Content-Type': 'application/json'
                 }
             })
