@@ -5,7 +5,7 @@ const ValidationError = require('../errors/ValidationError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getCards = (req, res, next) => {
-  Cards.find({})
+  Cards.find({}).sort({_id: -1})
     .then((cards) => res.status(200).send({ data: cards }))
     .catch((err) => next(err));
 };
