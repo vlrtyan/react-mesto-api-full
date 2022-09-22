@@ -47,7 +47,9 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    api.setAuthHeaders();
     if (loggedIn) {
+      getInitialData();
       navigate('/');
     }
   }, [loggedIn, navigate])
@@ -59,6 +61,7 @@ function App() {
         setLoggedIn(true);
         navigate('/');
         setUserEmail(formData.email);
+        getInitialData();
       })
       .catch((err) => {
         console.log(err);
@@ -77,7 +80,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        
+
         setTooltipSuccessful(false);
         setTooltipOpen(true);
       });
@@ -87,6 +90,8 @@ function App() {
     setLoggedIn(false);
     localStorage.removeItem('token');
     navigate('/sign-in');
+    setCurrentUser({});
+    setCards([]);
   }
 
   //отрисовка страницы
@@ -112,7 +117,7 @@ function App() {
   const handleUpdateUser = ({ name, about }) => {
     api.editUserData({ name, about })
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch(err => console.log(err))
@@ -120,18 +125,18 @@ function App() {
   const handleUpdateAvatar = ({ avatar }) => {
     api.changeAvatar({ avatar })
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch(err => console.log(err))
   }
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(like => like._id === currentUser._id);
+    const isLiked = card.likes.some(like => like === currentUser._id);
     // отправить запрос в API и обновить данные карточки
     api.changeLikeCardStatus(card, isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c));
       })
       .catch(err => console.log(err));
   }
@@ -147,28 +152,21 @@ function App() {
   const handleAddPlaceSubmit = (newCard) => {
     api.addNewItem(newCard)
       .then((newCard) => {
-        setCards([newCard, ...cards])
+        setCards([newCard.data, ...cards])
         closeAllPopups()
       })
       .catch(err => console.log(err))
   }
 
-  React.useEffect(() => {
+  const getInitialData = () => {
     api.setAuthHeaders();
-    api.getUserData()
-      .then(userData => {
-        setCurrentUser(Object.values(userData)[0])})
-      .catch(err => console.log(err))
-  }, [])
-
-  React.useEffect(() => {
-    api.setAuthHeaders();
-    api.getInitialCards()
-      .then((res) => {
-        setCards(Object.values(res)[0]);
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([userData, cards]) => {
+        setCurrentUser(userData.data);
+        setCards(cards.data);
       })
-      .catch((err) => console.log(err))
-  }, [])
+      .catch(err => console.log(err))
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
