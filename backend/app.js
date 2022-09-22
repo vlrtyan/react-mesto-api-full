@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -21,15 +21,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
-// app.use(cors());
+app.use(cors());
 
 app.use(requestLogger);
 
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 
 app.post('/signup', validateUserBody, createUser);
