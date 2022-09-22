@@ -166,25 +166,6 @@ function App() {
       .catch(err => console.log(err))
   }
 
-
-  // React.useEffect(() => {
-  //   api.setAuthHeaders();
-  //   api.getUserData()
-  //     .then(userData => {
-  //       setCurrentUser(userData.data)
-  //     })
-  //     .catch(err => console.log(err))
-  // }, [])
-
-  // React.useEffect(() => {
-  //   api.setAuthHeaders();
-  //   api.getInitialCards()
-  //     .then((res) => {
-  //       setCards(res.data);
-  //     })
-  //     .catch((err) => console.log(err))
-  // }, [])
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
