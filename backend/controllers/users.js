@@ -6,7 +6,7 @@ const ErrorNotFound = require('../errors/ErrorNotFound');
 const ValidationError = require('../errors/ValidationError');
 const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const JWT_SECRET = require('../config');
+const { JWT_SECRET } = require('../config');
 
 const MONGO_DUPLICATE_ERROR_CODE = 11000;
 
