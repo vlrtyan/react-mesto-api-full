@@ -7,8 +7,6 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-console.log('env ', process.env.NODE_ENV);
-
 const {
   login, createUser,
 } = require('./controllers/users');
