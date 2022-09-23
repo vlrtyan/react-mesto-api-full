@@ -39,11 +39,11 @@ app.use(isAuthorised);
 app.use('/', require('./routes/users'));
 app.use('/', require('./routes/cards'));
 
-app.use(errorLogger);
-
 app.use((req, res, next) => {
   next(new ErrorNotFound('Пути не существует'));
 });
+
+app.use(errorLogger);
 
 // обработчик ошибок celebrate
 app.use(errors());

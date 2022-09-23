@@ -8,6 +8,7 @@ const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const MONGO_DUPLICATE_ERROR_CODE = 11000;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   Users.find({})
@@ -116,7 +117,8 @@ module.exports.login = (req, res, next) => {
       return bcrypt.compare(password, foundUser.password)
         .then((matched) => {
           if (!matched) { return Promise.reject(new UnauthorizedError('Неправильные почта или пароль')); }
-          return jwt.sign({ _id: foundUser._id }, 'very_secret', { expiresIn: '7d' });
+          return jwt.sign({ _id: foundUser._id },
+            NODE_ENV === 'production' ? JWT_SECRET : 'very_secret', { expiresIn: '7d' });
         })
         .then((token) => {
           res.status(200).send({ token });
