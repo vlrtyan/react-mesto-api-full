@@ -13,7 +13,7 @@ module.exports.isAuthorised = (req, res, next) => {
 
   let payload;
   try {
-    payload = jwt.verify(token, NODE_ENV ? JWT_SECRET : 'very_secret');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'very_secret');
   } catch (err) {
     next(new UnauthorizedError('Пользователь не авторизован'));
   }
