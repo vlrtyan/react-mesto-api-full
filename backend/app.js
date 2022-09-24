@@ -1,14 +1,11 @@
-const express = require('express');
 require('dotenv').config();
+const express = require('express');
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { JWT_SECRET } = require('./config');
-
-console.log(process.env.NODE_ENV, JWT_SECRET);
 
 const {
   login, createUser,
