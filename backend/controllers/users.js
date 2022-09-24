@@ -8,6 +8,8 @@ const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const { JWT_SECRET } = require('../config');
 
+const MONGO_DUPLICATE_ERROR_CODE = 11000;
+
 module.exports.getUsers = (req, res, next) => {
   Users.find({})
     .then((users) => res.status(200).send({ data: users }))
@@ -45,7 +47,7 @@ module.exports.createUser = (req, res, next) => {
       .then((user) => Users.findOne({ _id: user._id }))
       .then((user) => res.status(200).send({ data: user })))
     .catch((err) => {
-      if (err.code === 11000) {
+      if (err.code === MONGO_DUPLICATE_ERROR_CODE) {
         next(new ConflictError('E-mail занят'));
       } else if (err.name === 'ValidationError') {
         next(new ValidationError('Переданы некорректные данные'));
