@@ -4,6 +4,7 @@ if (NODE_ENV === "production") {
   BASE_URL = "https://mesto.vlrtyan.nomoredomains.sbs";
 } else {
   BASE_URL = "http://localhost:3000";
+}
 
 const HEADERS = {
     'Accept': 'application/json',
