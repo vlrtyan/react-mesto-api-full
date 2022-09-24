@@ -1,12 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-export let BASE_URL = "";
-const { NODE_ENV } = process.env;
-if (NODE_ENV === "production") {
-  BASE_URL = "https://mesto.vlrtyan.nomoredomains.sbs";
-} else {
-  BASE_URL = "http://localhost:3000";
-
 const { JWT_SECRET = 'secret-key' } = process.env;
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
