@@ -36,16 +36,23 @@ module.exports.getCurrentUser = (req, res, next) => {
 
 // создание нового пользователя
 module.exports.createUser = (req, res, next) => {
-  const {
-    name, about, avatar, email, password,
-  } = req.body;
-  bcrypt
-    .hash(password, 10)
-    .then((hash) => Users.create({
-      name, about, avatar, email, password: hash,
+  Users.findOne({ email: req.body.email })
+    .then((user) => {
+      if (user) {
+        next(new ConflictError('E-mail занят'));
+      } else {
+        const {
+          name, about, avatar, email, password,
+        } = req.body;
+        bcrypt
+          .hash(password, 10)
+          .then((hash) => Users.create({
+            name, about, avatar, email, password: hash,
+          })
+            .then((newUser) => Users.findOne({ _id: newUser._id }))
+            .then((newUser) => res.status(200).send({ data: newUser })));
+      }
     })
-      .then((user) => Users.findOne({ _id: user._id }))
-      .then((user) => res.status(200).send({ data: user })))
     .catch((err) => {
       if (err.code === MONGO_DUPLICATE_ERROR_CODE) {
         next(new ConflictError('E-mail занят'));
