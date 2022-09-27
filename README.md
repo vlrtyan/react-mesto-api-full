@@ -1,8 +1,18 @@
-# react-mesto-api-full
-Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
+# Проект `Место`
+Проект `Mesto`, включающий фронтенд и бэкенд части приложения с возможностями авторизации и регистрации пользователей, операции с карточками и пользователями.
 
-IP 178.154.205.16
+## Стек технологий
+- JS
+- React
+- Node.js
+- Express.js
+- Nginx
+- MongoDB
 
-Frontend https://mesto.vlrtyan.nomoredomains.sbs
+## Ссылки
 
-Backend https://api.mesto.vlrtyan.nomoredomains.sbs
+`IP 178.154.205.16`
+
+`Frontend` https://mesto.vlrtyan.nomoredomains.sbs
+
+`Backend` https://api.mesto.vlrtyan.nomoredomains.sbs
